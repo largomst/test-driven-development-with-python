@@ -1,30 +1,39 @@
 from selenium import webdriver
+import unittest
 
-browser = webdriver.Chrome(executable_path="/opt/homebrew/bin/chromedriver")
+class NewVisitorTest(unittest.TestCase):
 
-# A 打开了网页
-browser.get('http://localhost:8000')
+    def setUp(self):
+        self.browser = webdriver.Chrome(executable_path="/opt/homebrew/bin/chromedriver")
 
-# A 注意到浏览器标题包含 To-Do 这个词
-assert 'To-Do' in browser.title, "浏览器的标题是 " + browser.title
 
-# A 被请求输入一个待办事项
+    def tearDown(self):
+        self.browser.quit()
 
-# A 在文本框中输入了 "Buy iPad"
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        # A 打开了网页
+        self.browser.get('http://localhost:8000')
 
-# A 输入了回车
-# 页面中出现了 "1. Buy iPad"
+        # A 注意到浏览器标题包含 To-Do 这个词
+        self.assertIn('To-Do' , self.browser.title)
+        self.fail('Finish the test!')
 
-# 页面中出现一个文本框，可以输入其他待办事项
-# A 又输入了 "Use iPad"
+        # A 被请求输入一个待办事项
 
-# 页面更新，出现了新的待办事项
+        # A 在文本框中输入了 "Buy iPad"
 
-# A 希望自己输入的待办事项是一直保存下来的
-# A 记住了这个网站的 URL
+        # A 输入了回车
+        # 页面中出现了 "1. Buy iPad"
 
-# A 再次打开 URL 发现内容还在
+        # 页面中出现一个文本框，可以输入其他待办事项
+        # A 又输入了 "Use iPad"
 
-# A 完成了测试
+        # 页面更新，出现了新的待办事项
 
-browser.quit()
+        # A 希望自己输入的待办事项是一直保存下来的
+        # A 记住了这个网站的 URL
+
+        # A 再次打开 URL 发现内容还在
+
+if __name__ == '__main__':
+    unittest.main()
